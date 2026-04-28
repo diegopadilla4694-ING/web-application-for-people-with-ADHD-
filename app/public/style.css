@@ -1,0 +1,77 @@
+/* Fondo */
+html {
+  --s: 36px; /* control the size*/
+  --c1: #8294c9;
+  --c2: #c4cbd9;
+  --c3: #7d969b;
+  
+  --g1: conic-gradient(at calc(250%/3) calc(50%/3),var(--c2) 60deg,#0000 0 300deg,var(--c1) 0);
+  --g2: conic-gradient(at calc(50%/3) 50%,#0000 75%,var(--c1) 0);
+  --g3: conic-gradient(at calc(100%/3) 50%,#0000 75%,var(--c2) 0);
+  --g4: conic-gradient(from 59deg at calc(200%/3) calc(249%/9),var(--c3) 61deg,#0000 62deg);
+  --g5: conic-gradient(from 60deg at 50% calc(250%/3),#f1f1f1 /*4th color*/ 60deg,var(--c1) 0 120deg,#0000 0);
+  --_p: calc(9*tan(30deg)*var(--s));
+  background:
+    var(--g1) calc(-1*var(--s)) 0,var(--g1) calc(2*var(--s)) var(--_p),
+    var(--g2),var(--g2) calc(3*var(--s)) var(--_p),
+    var(--g3),var(--g3) calc(3*var(--s)) var(--_p),
+    var(--g4),var(--g4) calc(3*var(--s)) var(--_p),
+    var(--g5) calc(3*var(--s)) 0,var(--g5) 0 var(--_p) var(--c3);
+  background-size: calc(6*var(--s)) calc(2*var(--_p))
+}
+
+/* BODY */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Caja estilo vidrio mejorada */
+.login-box {
+  width: 420px;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 0 45px rgba(0,0,0,0.25);
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.4);
+  animation: fadeIn .7s ease-in-out;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Título */
+.login-box h2 {
+  font-size: 36px;
+  color: #222;
+  margin-bottom: 35px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* INPUTS */
+.input-box {
+  position: relative;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 18px 12px;
+  border: none;
+  border-bottom: 3px solid #333;
+  background: transpare
+
+}
+
