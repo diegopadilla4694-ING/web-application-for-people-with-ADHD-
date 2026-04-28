@@ -1,0 +1,2 @@
+La solicitud de ping no pudo encontrar el host -n. Compruebe el nombre y
+vuelva a intentarlo.

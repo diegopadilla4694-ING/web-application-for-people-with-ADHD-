@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus App</title>
+
+    <link rel="stylesheet" href="/admin.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>LOGRO FACIL</h2>
+
+        <div class="menu-item active" data-target="home">🏠 Inicio</div>
+        <div class="menu-item" data-target="tareas">🧠 Tareas</div>
+        <div class="menu-item" data-target="progreso">📊 Progreso</div>
+        <div class="menu-item" data-target="perfil">⚙ Perfil</div>
+
+        //cerrar secion
+        <a id="logoutBtn" class="logout-btn">Cerrar Sesión</a>
+    </div>
+
+    //contenido
+    <div class="content">
+
+        //home principal
+        <section id="sec-home">
+            <div class="banner">
+                <h1>✨ Hoy puedes lograrlo</h1>
+                <p>Completa pequeñas tareas y avanza paso a paso</p>
+            </div>
+        </section>
+
+        <!-- TAREAS -->
+        <section id="sec-tareas" class="hidden">
+            <h1>Tareas de hoy</h1>
+
+            <div id="taskList">
+
+                <div class="task">
+                    <p>Estudiar 20 minutos</p>
+                    <button onclick="completar(this)">✅</button>
+                </div>
+
+                <div class="task">
+                    <p>Leer 5 páginas</p>
+                    <button onclick="completar(this)">✅</button>
+                </div>
+
+                <div class="task">
+                    <p>Organizar escritorio</p>
+                    <button onclick="completar(this)">✅</button>
+                </div>
+
+            </div>
+
+            <div id="reward" class="hidden">
+                🎉 ¡Bien hecho!
+            </div>
+        </section>
+
+        //progreso
+        <section id="sec-progreso" class="hidden">
+            <h1>Tu progreso</h1>
+
+            <div class="progress-bar">
+                <div id="progressFill"></div>
+            </div>
+
+            <p id="progressText">0%</p>
+        </section>
+
+        <!-- PERFIL -->
+        <section id="sec-perfil" class="hidden">
+            <h1>Perfil</h1>
+        </section>
+
+    </div>
+
+    //tareas
+    <script>
+        let progreso = 0;
+
+        function completar(btn) {
+            btn.parentElement.style.display = 'none';
+
+            const total = document.querySelectorAll(".task").length;
+            progreso += Math.floor(100 / total);
+
+            document.getElementById("reward").classList.remove("hidden");
+
+            setTimeout(() => {
+                document.getElementById("reward").classList.add("hidden");
+            }, 1500);
+
+            document.getElementById("progressFill").style.width = progreso + "%";
+            document.getElementById("progressText").innerText = progreso + "%";
+        }
+    </script>
+
+    <!-- 🔥 IMPORTANTE: TU JS PRINCIPAL -->
+    <script src="/admin.js"></script>
+
+</body>
+</html>

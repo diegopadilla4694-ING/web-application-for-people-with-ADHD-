@@ -1,0 +1,16 @@
+
+Traza a la direcci¢n www.lacnic.net [2001:13c7:7002:4128::145]
+sobre un m ximo de 30 saltos:
+
+  1    41 ms     3 ms     4 ms  2806:261:380:35::2012 
+  2    88 ms     3 ms     4 ms  2806:261::10:5:56:139 
+  3   179 ms    31 ms    29 ms  2001:550:2:42::f:2 
+  4     *        *        *     Tiempo de espera agotado para esta solicitud.
+  5    39 ms    35 ms    31 ms  be2667.ccr21.elp02.atlas.cogentco.com [2001:550:0:1000::9a36:5719] 
+  6     *        *        *     Tiempo de espera agotado para esta solicitud.
+  7    54 ms    49 ms    49 ms  port-channel8121.ccr91.jan02.atlas.cogentco.com [2001:550:0:1000::9a36:28fa] 
+  8    72 ms    73 ms     *     be8472.ccr81.mia03.atlas.cogentco.com [2001:550:0:1000::9a36:392] 
+  9     *        *        *     Tiempo de espera agotado para esta solicitud.
+ 10    96 ms    69 ms    71 ms  be2287.nr71.b038335-1.bct01.atlas.cogentco.com [2001:550:0:1000::9a18:5eaa] 
+ 11   552 ms   382 ms   400 ms  2001:550:2:9d::6e:2 
+ 12  

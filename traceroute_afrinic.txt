@@ -1,0 +1,27 @@
+
+Traza a la direcci¢n www.afrinic.net [2001:42d0:0:250::4]
+sobre un m ximo de 30 saltos:
+
+  1   169 ms     6 ms     4 ms  2806:261:380:35::2012 
+  2    39 ms     5 ms     4 ms  2806:261::10:5:56:139 
+  3     *        *        *     Tiempo de espera agotado para esta solicitud.
+  4     *       36 ms     *     2001:550:2:42::f:1 
+  5     *        *       34 ms  be2669.ccr22.elp02.atlas.cogentco.com [2001:550:0:1000::9a36:5741] 
+  6     *        *        *     Tiempo de espera agotado para esta solicitud.
+  7    53 ms    54 ms    52 ms  port-channel8122.ccr92.jan02.atlas.cogentco.com [2001:550:0:1000::9a36:2936] 
+  8     *        *        *     Tiempo de espera agotado para esta solicitud.
+  9    74 ms    74 ms    72 ms  port-channel3483.ccr92.dca04.atlas.cogentco.com [2001:550:0:1000::9a36:aca9] 
+ 10     *        *        *     Tiempo de espera agotado para esta solicitud.
+ 11     *        *        *     Tiempo de espera agotado para esta solicitud.
+ 12     *        *      145 ms  be9432.ccr51.lon05.atlas.cogentco.com [2001:550:0:1000::9a36:4e9e] 
+ 13     *        *        *     Tiempo de espera agotado para esta solicitud.
+ 14   361 ms   227 ms   219 ms  2001:978:2:22::2 
+ 15   395 ms   314 ms   314 ms  2c0f:fc00:2:25::1 
+ 16   327 ms   320 ms   315 ms  2c0f:fc00:0:5::201 
+ 17   316 ms   329 ms   316 ms  2c0f:fc04:4:1105:168:209:129:138 
+ 18   322 ms   316 ms   314 ms  2c0f:fc04:4:1104:168:209:129:137 
+ 19   351 ms   340 ms   342 ms  2c0f:fc00:5000:4::2 
+ 20   315 ms   321 ms   317 ms  2001:42d0:1:103::1 
+ 21   317 ms   317 ms   316 ms  lb.iso.afrinic.net [2001:42d0:0:250::4] 
+
+Traza completa.
