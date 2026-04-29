@@ -1,77 +1,99 @@
-/* Fondo */
-html {
-  --s: 36px; /* control the size*/
-  --c1: #8294c9;
-  --c2: #c4cbd9;
-  --c3: #7d969b;
-  
-  --g1: conic-gradient(at calc(250%/3) calc(50%/3),var(--c2) 60deg,#0000 0 300deg,var(--c1) 0);
-  --g2: conic-gradient(at calc(50%/3) 50%,#0000 75%,var(--c1) 0);
-  --g3: conic-gradient(at calc(100%/3) 50%,#0000 75%,var(--c2) 0);
-  --g4: conic-gradient(from 59deg at calc(200%/3) calc(249%/9),var(--c3) 61deg,#0000 62deg);
-  --g5: conic-gradient(from 60deg at 50% calc(250%/3),#f1f1f1 /*4th color*/ 60deg,var(--c1) 0 120deg,#0000 0);
-  --_p: calc(9*tan(30deg)*var(--s));
-  background:
-    var(--g1) calc(-1*var(--s)) 0,var(--g1) calc(2*var(--s)) var(--_p),
-    var(--g2),var(--g2) calc(3*var(--s)) var(--_p),
-    var(--g3),var(--g3) calc(3*var(--s)) var(--_p),
-    var(--g4),var(--g4) calc(3*var(--s)) var(--_p),
-    var(--g5) calc(3*var(--s)) 0,var(--g5) 0 var(--_p) var(--c3);
-  background-size: calc(6*var(--s)) calc(2*var(--_p))
-}
-
-/* BODY */
+/* FONDO */
 body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f2f4f7;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* Caja estilo vidrio mejorada */
-.login-box {
-  width: 420px;
-  padding: 50px;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  box-shadow: 0 0 45px rgba(0,0,0,0.25);
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.4);
-  animation: fadeIn .7s ease-in-out;
+/* CONTENEDOR */
+.login-container {
+    width: 320px;
+    text-align: center;
 }
 
-/* Animación suave */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ICONO */
+.icon {
+    width: 70px;
+    height: 70px;
+    background: #7c88c5;
+    border-radius: 20px;
+    margin: 0 auto 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+    color: white;
 }
 
-/* Título */
-.login-box h2 {
-  font-size: 36px;
-  color: #222;
-  margin-bottom: 35px;
-  font-weight: 700;
-  letter-spacing: 1px;
+/* TITULO */
+h2 {
+    margin: 10px 0;
+    color: #1f2d3d;
 }
 
-/* INPUTS */
-.input-box {
-  position: relative;
-  margin-bottom: 40px;
-  width: 100%;
+/* SUBTITULO */
+.subtitle {
+    color: #6b7280;
+    margin-bottom: 25px;
 }
 
-.input-box input {
-  width: 100%;
-  padding: 18px 12px;
-  border: none;
-  border-bottom: 3px solid #333;
-  background: transpare
-
+/* LABEL */
+label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px;
+    font-size: 14px;
+    color: #374151;
 }
 
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+/* MENSAJE */
+.message {
+    height: 20px;
+    color: red;
+    font-size: 14px;
+}
+
+/* BOTÓN */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #4a90e2;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #357abd;
+}
+
+/* TEXTO REGISTRO */
+.register-text {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.register-text a {
+    color: #4a90e2;
+    text-decoration: none;
+}

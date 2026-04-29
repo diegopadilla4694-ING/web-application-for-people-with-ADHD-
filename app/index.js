@@ -2,23 +2,31 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-import { register, login, users } from "./controllers/authentication.controller.js";
+
+// 
+import { register, login } from "./controllers/authentication.controller.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = 4000;
 
-// Middlewares
+// =====================
+// MIDDLEWARES
+// =====================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Archivos estáticos
+// =====================
+// ARCHIVOS ESTÁTICOS
+// =====================
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "pages")));
 app.use(express.static(path.join(__dirname, "pages/admin")));
 
-// milweres seccion
+// =====================
+// VERIFICAR SESIÓN
+// =====================
 function verifySession(req, res, next) {
     const sessionUser = req.cookies.sessionUser;
 
@@ -26,44 +34,50 @@ function verifySession(req, res, next) {
         return res.redirect("/login");
     }
 
-    const isRegistered = users.some(u => u.user === sessionUser);
-    const isDefault = sessionUser === "admin";
-
-    if (!isRegistered && !isDefault) {
-        return res.redirect("/login");
-    }
-
     next();
 }
 
-// Rutas
+// =====================
+// RUTAS
+// =====================
+
+// HOME (puedes cambiar luego a home.html si quieres)
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "login.html"));
 });
 
+// LOGIN
 app.get("/login", (req, res) => {
     res.redirect("/");
 });
 
+// REGISTER
 app.get("/register", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "register.html"));
 });
 
+// ADMIN (PROTEGIDO)
 app.get("/admin", verifySession, (req, res) => {
     res.sendFile(path.join(__dirname, "pages/admin", "admin.html"));
 });
 
+// =====================
 // APIs
+// =====================
 app.post("/api/login", login);
 app.post("/api/register", register);
 
-//LOGOUT
+// =====================
+// LOGOUT
+// =====================
 app.get("/logout", (req, res) => {
     res.clearCookie("sessionUser", { path: "/" });
     res.redirect("/login");
 });
 
-// Servidor
+// =====================
+// SERVIDOR
+// =====================
 app.listen(PORT, () => {
     console.log("Servidor en http://localhost:" + PORT);
 });
