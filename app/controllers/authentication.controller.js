@@ -55,9 +55,9 @@ export async function login(req, res) {
         // login admin
         if (email === DEFAULT_USER && password === DEFAULT_PASSWORD) {
             res.cookie("sessionUser", DEFAULT_USER, {
-                httpOnly: false, // 🔥 CORRECCIÓN
+                httpOnly: false, 
                 sameSite: "lax",
-                secure: false,
+            secure: true,
                 path: "/"
             });
 
@@ -87,7 +87,7 @@ export async function login(req, res) {
         res.cookie("sessionUser", dbUser.email, {
             httpOnly: false, 
             sameSite: "lax",
-            secure: false,
+            secure: true,
             path: "/"
         });
 

@@ -15,7 +15,7 @@ const completedList = document.getElementById("completed-list");
 
 
 menuBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // 🔥 evita que se cierre al abrir
+    e.stopPropagation(); // evitar que se cierre
     sideMenu.classList.toggle("active");
 });
 
@@ -41,19 +41,171 @@ function randomMsg() {
     return congratsMessages[Math.floor(Math.random() * congratsMessages.length)];
 }
 
-// sugerencias (tdha)
+// sugerencias (tdha) 
 const suggestions = {
-    ejercicio: ["caminar 10 minutos", "estirarse 5 minutos", "hacer 5 sentadillas"],
-    tarea: ["hacer tarea 15 min", "leer 5 páginas", "resumir tema"],
-    limpiar: ["ordenar escritorio", "acomodar ropa", "tirar basura"]
-};
 
-// boton sugerencias
+    ejercicio: [
+        "caminar 10 minutos",
+        "estirarse 5 minutos",
+        "hacer 5 sentadillas"
+    ],
+
+    estudio: [
+        "leer 5 páginas",
+        "repasar apuntes 10 min",
+        "resolver 3 ejercicios"
+    ],
+
+    tarea: [
+        "hacer tarea 15 min",
+        "responder preguntas",
+        "revisar trabajo"
+    ],
+
+    limpiar: [
+        "ordenar escritorio",
+        "acomodar ropa",
+        "tirar basura"
+    ],
+
+    casa: [
+        "hacer la cama",
+        "limpiar mesa",
+        "barrer cuarto"
+    ],
+
+    enfoque: [
+        "trabajar 10 min sin distracciones",
+        "cerrar redes sociales",
+        "activar temporizador"
+    ],
+
+    personal: [
+        "beber agua",
+        "lavarse la cara",
+        "descansar 5 min"
+    ],
+
+    salud: [
+        "comer algo saludable",
+        "hidratarse",
+        "estirarse"
+    ],
+
+    mental: [
+        "respirar profundo",
+        "cerrar ojos 2 min",
+        "relajarse"
+    ],
+
+    social: [
+        "enviar mensaje a un amigo",
+        "hablar con alguien",
+        "hacer una llamada"
+    ],
+
+    organizacion: [
+        "planear el día",
+        "hacer lista de tareas",
+        "ordenar pendientes"
+    ],
+
+    productividad: [
+        "terminar una tarea",
+        "avanzar 10 minutos",
+        "revisar progreso"
+    ],
+
+    descanso: [
+        "cerrar ojos 5 min",
+        "respirar profundo",
+        "escuchar música"
+    ],
+
+    creatividad: [
+        "dibujar algo rápido",
+        "escribir ideas",
+        "imaginar soluciones"
+    ],
+
+    tecnologia: [
+        "limpiar archivos",
+        "organizar carpetas",
+        "borrar fotos innecesarias"
+    ],
+
+    finanzas: [
+        "revisar gastos",
+        "anotar ingresos",
+        "organizar dinero"
+    ],
+
+    alimentacion: [
+        "preparar snack saludable",
+        "comer fruta",
+        "tomar agua"
+    ],
+
+    higiene: [
+        "cepillarse dientes",
+        "lavarse manos",
+        "cambiarse ropa"
+    ],
+
+    rutina: [
+        "levantarse temprano",
+        "prepararse",
+        "empezar actividad"
+    ],
+
+    motivacion: [
+        "recordar objetivo",
+        "pensar positivo",
+        "empezar pequeño"
+    ],
+
+    energia: [
+        "moverse un poco",
+        "respirar profundo",
+        "tomar agua"
+    ],
+
+    lectura: [
+        "leer 3 páginas",
+        "subrayar ideas",
+        "resumir"
+    ],
+
+    escritura: [
+        "escribir 5 líneas",
+        "anotar ideas",
+        "hacer lista"
+    ],
+
+    revision: [
+        "revisar tarea",
+        "corregir errores",
+        "mejorar detalles"
+    ]
+
+};
+//sugerencias
 const quickTasks = [
     "caminar 5 minutos",
     "beber agua",
     "ordenar escritorio",
-    "respirar profundo 2 min"
+    "respirar profundo 2 min",
+    "estirarse 3 minutos",
+    "hacer 5 sentadillas",
+    "leer 2 páginas",
+    "organizar mochila",
+    "limpiar mesa",
+    "cerrar redes sociales",
+    "trabajar 5 minutos",
+    "anotar pendientes",
+    "lavarse la cara",
+    "escuchar música tranquila",
+    "tomar un descanso corto"
 ];
 
 async function init() {

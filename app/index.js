@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
@@ -84,3 +86,4 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
     console.log("Servidor en http://localhost:" + PORT);
 });
+

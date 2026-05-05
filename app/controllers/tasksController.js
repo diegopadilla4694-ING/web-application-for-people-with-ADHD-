@@ -17,7 +17,7 @@ export const getTasks = async (req, res) => {
     }
 };
 
-// 🔹 CREAR TAREA
+//crear tarea
 export const createTask = async (req, res) => {
     try {
         const { text } = req.body;
@@ -27,17 +27,17 @@ export const createTask = async (req, res) => {
             return res.status(400).json({ error: "Texto vacío" });
         }
 
-        // 🔥 CONTAR TAREAS PENDIENTES
+        // contar tareas pendientes
         const [rows] = await pool.query(
             "SELECT COUNT(*) as total FROM tasks WHERE completed = 0 AND user_email = ?",
             [user]
         );
 
-        const total = parseInt(rows[0].total); // 🔥 IMPORTANTE
+        const total = parseInt(rows[0].total); 
 
         console.log("🧠 Pendientes:", total);
 
-        // 🔴 BLOQUEO
+        // bloqueo
         if (total >= 3) {
             console.log("🚫 BLOQUEADO");
 
@@ -46,7 +46,7 @@ export const createTask = async (req, res) => {
             });
         }
 
-        // 🟢 INSERTAR
+        // insertar
         await pool.query(
             "INSERT INTO tasks (task, completed, user_email) VALUES (?, 0, ?)",
             [text, user]
@@ -73,12 +73,10 @@ export const toggleTask = async (req, res) => {
             [completed, id, user]
         );
 
-        // 🔥 SOLO SI SE COMPLETA
+        // solo si se completa
         if (completed) {
 
-            // =====================
-            // 🟣 OBTENER DATOS
-            // =====================
+            //obtener datos
             const [data] = await pool.query(
                 "SELECT xp, streak, last_completed FROM user_progress WHERE user_email=?",
                 [user]
@@ -88,7 +86,7 @@ export const toggleTask = async (req, res) => {
             let streak;
             let lastDate;
 
-            // 🔥 SI NO EXISTE → CREAR
+            // si no existe se crea
             if (data.length === 0) {
 
                 xp = 10;
@@ -102,20 +100,18 @@ export const toggleTask = async (req, res) => {
 
             } else {
 
-                xp = data[0].xp + 10; // 🔥 suma aquí
+                xp = data[0].xp + 10;//suma xp
                 streak = data[0].streak;
                 lastDate = data[0].last_completed;
 
-                // 🔥 actualizar XP
+                // actualizar xp
                 await pool.query(
                     "UPDATE user_progress SET xp=? WHERE user_email=?",
                     [xp, user]
                 );
             }
 
-            // =====================
-            // 🔥 CALCULAR NIVEL
-            // =====================
+            //calcular nivel
             const levels = [0, 100, 250, 500, 1000];
             let level = 1;
 
@@ -130,9 +126,7 @@ export const toggleTask = async (req, res) => {
                 [level, user]
             );
 
-            // =====================
-            // 🔥 RACHA POR DÍA
-            // =====================
+            // racha por dia
             const today = new Date().toISOString().slice(0, 10);
 
             if (!lastDate) {
@@ -151,7 +145,7 @@ export const toggleTask = async (req, res) => {
                 }
             }
 
-            // 🔥 ACTUALIZAR RACHA
+            // actualizar racha
             await pool.query(
                 "UPDATE user_progress SET streak=?, last_completed=? WHERE user_email=?",
                 [streak, today, user]

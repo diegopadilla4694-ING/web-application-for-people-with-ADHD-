@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("📥 Respuesta:", data);
 
-            // 🔥 LIMPIAR CLASES
+            //limpiar clases
             message.className = "message";
 
-            // 🔥 SI ES ERROR
+            // 
             if (!res.ok || data.message.toLowerCase().includes("error")) {
                 message.classList.add("error");
                 message.textContent = data.message || "Error al registrar";
                 return;
             }
 
-            // 🔥 ÉXITO
+            //exito
             message.classList.add("success");
             message.textContent = "Registro exitoso";
 
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             form.reset();
 
-            // opcional redirección
+            // redireccion
             setTimeout(() => {
                 window.location.href = "/";
             }, 1500);
