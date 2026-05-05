@@ -66,9 +66,18 @@ input {
 
 /* MENSAJE */
 .message {
-    height: 20px;
-    color: red;
-    font-size: 14px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* ROJO */
+.message.error {
+    color: #ef4444;
+}
+
+/* VERDE */
+.message.success {
+    color: #22c55e;
 }
 
 /* BOTÓN */

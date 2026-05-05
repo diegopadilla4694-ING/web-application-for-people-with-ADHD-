@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ register.js cargado");
 
     const form = document.getElementById("registerForm");
+    const message = document.getElementById("registerMessage");
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -26,14 +27,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("📥 Respuesta:", data);
 
-            document.getElementById("registerMessage").textContent = data.message;
+            // 🔥 LIMPIAR CLASES
+            message.className = "message";
 
-            if (res.ok) {
-                console.log("✅ Registro exitoso");
+            // 🔥 SI ES ERROR
+            if (!res.ok || data.message.toLowerCase().includes("error")) {
+                message.classList.add("error");
+                message.textContent = data.message || "Error al registrar";
+                return;
             }
+
+            // 🔥 ÉXITO
+            message.classList.add("success");
+            message.textContent = "Registro exitoso";
+
+            console.log("✅ Registro exitoso");
+
+            form.reset();
+
+            // opcional redirección
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1500);
 
         } catch (error) {
             console.error("🔥 Error:", error);
+
+            message.className = "message error";
+            message.textContent = "Error del servidor";
         }
     });
 

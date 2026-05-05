@@ -3,27 +3,50 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ login.js cargado");
 
     const form = document.getElementById("loginForm");
+    const params = new URLSearchParams(window.location.search);
+const msg = params.get("msg");
+
+if (msg === "unauthorized") {
+    document.getElementById("authMessage").textContent = "Debes iniciar sesión primero";
+}
+
+    if (!form) {
+        console.error("❌ No se encontró el formulario");
+        return;
+    }
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         console.log("📤 Enviando formulario...");
 
-        const user = document.getElementById("user").value;
-        const password = document.getElementById("password").value;
+        // obtener inputs
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+
+        // validacion
+        if (!emailInput || !passwordInput) {
+            console.error("❌ Inputs no encontrados");
+            return;
+        }
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
         try {
             const res = await fetch("/api/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user, password })
-            });
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+    credentials: "include" 
+});
 
             const data = await res.json();
 
             console.log("📥 Respuesta del servidor:", data);
 
-            document.getElementById("loginMessage").textContent = data.message;
+            const msg = document.getElementById("loginMessage");
+            if (msg) msg.textContent = data.message;
 
             if (res.ok) {
                 console.log("✅ Login correcto, redirigiendo...");
@@ -38,4 +61,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-

@@ -2,82 +2,85 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-
-// 
 import { register, login } from "./controllers/authentication.controller.js";
+import { getStats, getUser } from "./controllers/tasksController.js";
+
+import {
+    getTasks,
+    createTask,
+    toggleTask,
+    editTask,
+    deleteTask,
+    getProgress
+} from "./controllers/tasksController.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = 4000;
 
-// =====================
-// MIDDLEWARES
-// =====================
+// puerto
+const PORT = process.env.PORT || 4000;
+
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// =====================
-// ARCHIVOS ESTÁTICOS
-// =====================
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "pages")));
-app.use(express.static(path.join(__dirname, "pages/admin")));
-
-// =====================
-// VERIFICAR SESIÓN
-// =====================
+//verificar seccion
 function verifySession(req, res, next) {
     const sessionUser = req.cookies.sessionUser;
 
     if (!sessionUser) {
-        return res.redirect("/login");
+        return res.redirect("/?msg=unauthorized");
     }
 
     next();
 }
 
-// =====================
-// RUTAS
-// =====================
+//apis
+app.post("/api/login", login);
+app.post("/api/register", register);
 
-// HOME (puedes cambiar luego a home.html si quieres)
+app.get("/api/tasks", verifySession, getTasks);
+app.post("/api/tasks", verifySession, createTask);
+app.post("/api/tasks/toggle", verifySession, toggleTask);
+app.post("/api/tasks/edit", verifySession, editTask);
+app.delete("/api/tasks/:id", verifySession, deleteTask);
+app.get("/api/progress", verifySession, getProgress);
+app.get("/api/stats", verifySession, getStats);
+app.get("/api/user", verifySession, getUser);
+
+//archivos estaticos
+app.use(express.static(path.join(__dirname, "public")));
+
+//vistas
+
+//login principal
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "login.html"));
 });
 
-// LOGIN
-app.get("/login", (req, res) => {
-    res.redirect("/");
-});
-
-// REGISTER
+// Registro
 app.get("/register", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "register.html"));
 });
 
-// ADMIN (PROTEGIDO)
+//admin (protegido)
 app.get("/admin", verifySession, (req, res) => {
     res.sendFile(path.join(__dirname, "pages/admin", "admin.html"));
 });
 
-// =====================
-// APIs
-// =====================
-app.post("/api/login", login);
-app.post("/api/register", register);
-
-// =====================
-// LOGOUT
-// =====================
+// salir interfaz
 app.get("/logout", (req, res) => {
     res.clearCookie("sessionUser", { path: "/" });
-    res.redirect("/login");
+    res.redirect("/");
 });
 
-// =====================
-// SERVIDOR
-// =====================
+// Manejo existente
+app.get("*", (req, res) => {
+    res.redirect("/");
+});
+
+// servidor
 app.listen(PORT, () => {
     console.log("Servidor en http://localhost:" + PORT);
 });

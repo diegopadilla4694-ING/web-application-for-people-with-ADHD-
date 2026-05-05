@@ -1,108 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Focus App</title>
+    <title>Mis Tareas Increíbles</title>
 
+    <!-- Fuente -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/admin.css">
 </head>
 
 <body>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h2>LOGRO FACIL</h2>
-
-        <div class="menu-item active" data-target="home">🏠 Inicio</div>
-        <div class="menu-item" data-target="tareas">🧠 Tareas</div>
-        <div class="menu-item" data-target="progreso">📊 Progreso</div>
-        <div class="menu-item" data-target="perfil">⚙ Perfil</div>
-
-        //cerrar secion
-        <a id="logoutBtn" class="logout-btn">Cerrar Sesión</a>
+    <!-- boton salir -->
+    <div class="top-bar">
+        <a href="/logout" id="logout-btn">Salir</a>
     </div>
 
-    <!-- contenido -->
-    <div class="content">
+    <!-- menu-->
+<button id="menu-btn">☰</button>
 
-        
-        <section id="sec-home">
-            <div class="banner">
-                <h1>✨ Hoy puedes lograrlo</h1>
-                <p>Completa pequeñas tareas y avanza paso a paso</p>
+<div id="side-menu" class="side-menu">
+    <h3>📋 Historial</h3>
+    <ul id="completed-list"></ul>
+
+    <hr>
+
+    <p><strong>Usuario:</strong></p>
+    <p id="user-email"></p>
+</div>
+
+
+
+    <div class="app-container">
+
+        <header>
+            <h1>¡Hola!</h1>
+            <p class="subtitle">Aquí están tus metas de hoy. ¡Tú puedes!</p>
+        </header>
+              
+        <div class="xp-card">
+    <div class="xp-header">
+        <span>Nivel <b id="level">1</b></span>
+        <span>🔥 <b id="streak">0</b></span>
+    </div>
+
+    <div class="xp-bar">
+        <div id="xp-fill"></div>
+    </div>
+
+    <small><span id="xp">0</span> XP</small>
+    <p id="xp-text">0 / 100 XP</p>
+</div>
+
+        <!-- progreso -->
+        <section class="progress-section">
+            <div class="progress-header">
+                <span>Tu progreso</span>
+                <span id="progress-text">0%</span>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
         </section>
 
-        <!-- TAREAS -->
-        <section id="sec-tareas" class="hidden">
-            <h1>Tareas de hoy</h1>
+        <!-- sugerencias -->
+        <section class="input-section">
+            <input 
+                type="text" 
+                id="new-task-input" 
+                placeholder="¿Qué quieres lograr hoy?" 
+                autocomplete="off"
+            >
 
-            <div id="taskList">
+            <div id="suggestions-box" class="suggestions-box"></div>
 
-                <div class="task">
-                    <p>Estudiar 20 minutos</p>
-                    <button onclick="completar(this)">✅</button>
-                </div>
-
-                <div class="task">
-                    <p>Leer 5 páginas</p>
-                    <button onclick="completar(this)">✅</button>
-                </div>
-
-                <div class="task">
-                    <p>Organizar escritorio</p>
-                    <button onclick="completar(this)">✅</button>
-                </div>
-
-            </div>
-
-            <div id="reward" class="hidden">
-                🎉 ¡Bien hecho!
-            </div>
+            <button id="add-task-btn" aria-label="Añadir tarea">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
         </section>
 
-        
-        <section id="sec-progreso" class="hidden">
-            <h1>Tu progreso</h1>
+        <!-- boton ayuda -->
+        <button id="help-btn" class="help-btn">
+            No sé qué hacer
+        </button>
 
-            <div class="progress-bar">
-                <div id="progressFill"></div>
-            </div>
-
-            <p id="progressText">0%</p>
-        </section>
-
-        <!-- PERFIL -->
-        <section id="sec-perfil" class="hidden">
-            <h1>Perfil</h1>
+        <!-- lista -->
+        <section class="tasks-section">
+            <ul id="task-list"></ul>
         </section>
 
     </div>
 
-  
-    <script>
-        let progreso = 0;
+    <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+        <h2 id="modal-title">🎉 ¡Felicidades!</h2>
+        <p id="modal-text">Mensaje aquí</p>
+        <button id="close-modal">Continuar</button>
+    </div>
+</div>
 
-        function completar(btn) {
-            btn.parentElement.style.display = 'none';
+</div>
+</div>
 
-            const total = document.querySelectorAll(".task").length;
-            progreso += Math.floor(100 / total);
-
-            document.getElementById("reward").classList.remove("hidden");
-
-            setTimeout(() => {
-                document.getElementById("reward").classList.add("hidden");
-            }, 1500);
-
-            document.getElementById("progressFill").style.width = progreso + "%";
-            document.getElementById("progressText").innerText = progreso + "%";
-        }
-    </script>
-
+   
     
+
+    <!-- confeti -->
+    <div id="confetti-canvas-container"></div>
+
+    <!-- libreria animacion -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- JS -->
     <script src="/admin.js"></script>
 
 </body>
+
 </html>

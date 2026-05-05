@@ -1,9 +1,11 @@
 import { pool } from "../db/conexion.js";
+import bcrypt from "bcrypt";
 
+// usuario admin
 const DEFAULT_USER = "admin";
 const DEFAULT_PASSWORD = "graficos";
 
-// REGISTRO
+// registro
 export async function register(req, res) {
     const { user, email, password } = req.body;
 
@@ -21,28 +23,39 @@ export async function register(req, res) {
             return res.status(400).json({ message: "El usuario ya existe" });
         }
 
+        // encriptar contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        console.log("🔐 HASH:", hashedPassword);
+
         await pool.query(
             "INSERT INTO users (user, email, password) VALUES (?, ?, ?)",
-            [user, email, password]
+            [user, email, hashedPassword]
+        );
+
+        // progreso
+        await pool.query(
+            "INSERT INTO user_progress (user_email) VALUES (?)",
+            [email]
         );
 
         res.json({ message: "Usuario registrado correctamente" });
 
     } catch (error) {
-        console.error(error);
+        console.error("ERROR REGISTER:", error);
         res.status(500).json({ message: "Error del servidor" });
     }
 }
 
-// LOGIN
+// login
 export async function login(req, res) {
-    const { user, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        // LOGIN ADMIN (OPCIONAL)
-        if (user === DEFAULT_USER && password === DEFAULT_PASSWORD) {
+        // login admin
+        if (email === DEFAULT_USER && password === DEFAULT_PASSWORD) {
             res.cookie("sessionUser", DEFAULT_USER, {
-                httpOnly: true,
+                httpOnly: false, // 🔥 CORRECCIÓN
                 sameSite: "lax",
                 secure: false,
                 path: "/"
@@ -51,23 +64,28 @@ export async function login(req, res) {
             return res.json({ message: "Login como admin" });
         }
 
+        // buscar email
         const [rows] = await pool.query(
-            "SELECT * FROM users WHERE user = ?",
-            [user]
+            "SELECT * FROM users WHERE email = ?",
+            [email]
         );
 
         if (rows.length === 0) {
-            return res.status(400).json({ message: "Usuario no encontrado" });
+            return res.status(400).json({ message: "Correo no encontrado" });
         }
 
         const dbUser = rows[0];
 
-        if (dbUser.password !== password) {
+        // comparar contraseña
+        const isValid = await bcrypt.compare(password, dbUser.password);
+
+        if (!isValid) {
             return res.status(400).json({ message: "Contraseña incorrecta" });
         }
 
-        res.cookie("sessionUser", dbUser.user, {
-            httpOnly: true,
+        // guardar cookie
+        res.cookie("sessionUser", dbUser.email, {
+            httpOnly: false, 
             sameSite: "lax",
             secure: false,
             path: "/"
@@ -76,7 +94,7 @@ export async function login(req, res) {
         res.json({ message: "Login exitoso" });
 
     } catch (error) {
-        console.error(error);
+        console.error("ERROR LOGIN:", error);
         res.status(500).json({ message: "Error del servidor" });
     }
 }
