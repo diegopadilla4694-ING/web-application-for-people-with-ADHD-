@@ -428,3 +428,65 @@ header h1 {
     color: #6b7280;
     margin-bottom: 6px;
 }
+
+/* prioridad */
+
+.priority-select{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    margin-top:14px;
+
+    border:1px solid #d8dce9;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    font-size:15px;
+
+    color:#4b5563;
+
+    outline:none;
+
+    transition:.2s;
+}
+
+.priority-select:focus{
+
+    border-color:#a5add6;
+}
+
+/* texto limite */
+
+.task-limit-info{
+
+    margin-top:12px;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    color:#7c84a5;
+
+    text-align:center;
+}
+
+/* colores priodridad */
+
+.priority-alta{
+
+    border-left:6px solid #ef4444;
+}
+
+.priority-media{
+
+    border-left:6px solid #facc15;
+}
+
+.priority-baja{
+
+    border-left:6px solid #22c55e;
+}

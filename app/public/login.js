@@ -46,7 +46,25 @@ if (msg === "unauthorized") {
             console.log("📥 Respuesta del servidor:", data);
 
             const msg = document.getElementById("loginMessage");
-            if (msg) msg.textContent = data.message;
+            if(msg){
+
+    msg.textContent = data.message;
+
+    msg.classList.add("message-box");
+
+    // exito
+    if(res.ok){
+
+        msg.classList.remove("error-message");
+        msg.classList.add("success-message");
+
+    }else{
+
+        msg.classList.remove("success-message");
+        msg.classList.add("error-message");
+    }
+
+}
 
             if (res.ok) {
                 console.log("✅ Login correcto, redirigiendo...");
@@ -59,5 +77,22 @@ if (msg === "unauthorized") {
             console.error("🔥 Error en fetch:", error);
         }
     });
+
+    const togglePassword = document.getElementById("togglePassword");
+
+const passwordInput = document.getElementById("password");
+
+togglePassword.addEventListener("click", () => {
+
+    if(passwordInput.type === "password"){
+
+        passwordInput.type = "text";
+
+    }else{
+
+        passwordInput.type = "password";
+    }
+
+});
 
 });

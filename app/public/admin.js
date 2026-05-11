@@ -14,6 +14,7 @@ const sideMenu = document.getElementById("side-menu");
 const completedList = document.getElementById("completed-list");
 
 
+
 menuBtn.addEventListener("click", (e) => {
     e.stopPropagation(); // evitar que se cierre
     sideMenu.classList.toggle("active");
@@ -242,7 +243,8 @@ function renderTasks() {
         .forEach(task => {
 
             const li = document.createElement("li");
-            li.className = `task-item`;
+            li.className =
+`task-item priority-${task.priority}`;
 
             li.innerHTML = `
                 <label class="task-checkbox">
@@ -285,12 +287,17 @@ function renderTasks() {
 // agregar
 async function addTask() {
     const text = newTaskInput.value.trim();
+    const priority =
+document.getElementById("prioritySelect").value;
     if (!text) return;
 
     const res = await fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({
+    text,
+    priority
+})
     });
 
     // por si existe error

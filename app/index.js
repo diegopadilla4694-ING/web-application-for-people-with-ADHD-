@@ -87,3 +87,5 @@ app.listen(PORT, () => {
     console.log("Servidor en http://localhost:" + PORT);
 });
 
+console.log("DB:", process.env.DB_HOST);
+

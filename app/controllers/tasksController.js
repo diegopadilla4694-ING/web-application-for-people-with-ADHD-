@@ -20,7 +20,7 @@ export const getTasks = async (req, res) => {
 //crear tarea
 export const createTask = async (req, res) => {
     try {
-        const { text } = req.body;
+        const { text, priority } = req.body;
         const user = req.cookies.sessionUser;
 
         if (!text) {
@@ -47,10 +47,11 @@ export const createTask = async (req, res) => {
         }
 
         // insertar
-        await pool.query(
-            "INSERT INTO tasks (task, completed, user_email) VALUES (?, 0, ?)",
-            [text, user]
-        );
+       await pool.query(
+    `INSERT INTO tasks (task, user_email, priority)
+     VALUES (?, ?, ?)`,
+    [text, user, priority]
+);
 
         console.log("✅ TAREA AGREGADA");
 
