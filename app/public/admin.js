@@ -492,55 +492,6 @@ function renderTasks() {
 
 
 
-// historial
-
-completedList.innerHTML = "";
-
-const completedTasks = tasks.filter(
-    task => task.completed == 1
-);
-
-// contador historial
-
-document.getElementById("history-count")
-.textContent =
-`${completedTasks.length} tareas`;
-
-completedTasks.forEach(task => {
-
-    const li = document.createElement("li");
-
-    li.className = "completed-task";
-
-    li.innerHTML = `
-
-        <div class="completed-task-icon">
-            ✓
-        </div>
-
-        <div class="completed-task-content">
-
-            <span class="completed-task-text">
-
-                ${task.task}
-
-            </span>
-
-            <span class="completed-task-date">
-
-                ${new Date().toLocaleDateString()}
-
-            </span>
-
-        </div>
-
-    `;
-
-    completedList.appendChild(li);
-
-});
-
-updateProgress();
 // agregar
 async function addTask() {
     const text = newTaskInput.value.trim();
