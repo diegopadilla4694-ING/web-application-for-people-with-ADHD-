@@ -466,16 +466,86 @@ button:hover {
     font-weight:600;
 }
 
-/* responsive */
+/* ajuste */
+
+/* ajuste*/
 
 @media(max-width:950px){
 
-    .left-side{
-        display:none;
+    .main-login{
+
+        flex-direction:column;
     }
 
-    .right-side{
+    /* izquierda */
+
+    .left-side{
+
         width:100%;
+
+        min-height:auto;
+
+        padding:50px 30px;
+
+        border-right:none;
+
+        border-bottom:1px solid #e5e7eb;
+    }
+
+    /* titulo */
+
+    .brand-content h1{
+
+        font-size:42px;
+    }
+
+    /* descripcion */
+
+    .brand-content p{
+
+        font-size:16px;
+    }
+
+    /* lista */
+
+    .info-list{
+
+        gap:14px;
+    }
+
+    .info-item{
+
+        font-size:15px;
+    }
+
+    /* tags */
+
+    .tags{
+
+        gap:10px;
+    }
+
+    .tags span{
+
+        font-size:13px;
+
+        padding:8px 14px;
+    }
+
+    /* derecha */
+
+    .right-side{
+
+        width:100%;
+
+        padding:40px 25px;
+    }
+
+    /* card */
+
+    .login-container{
+
+        max-width:100%;
     }
 
 }
