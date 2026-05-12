@@ -234,61 +234,318 @@ async function init() {
 }
 
 // render
+
 function renderTasks() {
+
     taskList.innerHTML = "";
 
-    //solo pendientes
+    // ===== TAREA DESTACADA =====
+
+    const featuredContainer =
+    document.getElementById(
+        "featured-task-container"
+    );
+
+    // limpiar contenedor
+
+    featuredContainer.innerHTML = "";
+
+    // buscar prioridad alta
+
+    const featuredTask = tasks.find(task =>
+
+        task.priority === "alta"
+        &&
+        task.completed == 0
+
+    );
+
+    // mostrar destacada
+
+    if(featuredTask){
+
+        featuredContainer.innerHTML = `
+
+            <div class="featured-task">
+
+                <div class="featured-header">
+
+                    🔥
+                    <span>
+                        Tarea principal del día
+                    </span>
+
+                </div>
+
+                <div class="featured-task-body">
+
+                    <label class="task-checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="featured-checkbox"
+                        >
+
+                        <span class="checkmark"></span>
+
+                    </label>
+
+                    <div class="featured-task-text">
+
+                        ${featuredTask.task}
+
+                    </div>
+
+                    <button
+                        class="delete-btn"
+                        id="featured-delete"
+                    >
+
+                        ✕
+
+                    </button>
+
+                </div>
+
+                <div class="featured-priority">
+
+                    Alta prioridad
+
+                </div>
+
+            </div>
+
+        `;
+
+        // eventos
+
+        const featuredCheckbox =
+        document.getElementById(
+            "featured-checkbox"
+        );
+
+        const featuredDelete =
+        document.getElementById(
+            "featured-delete"
+        );
+
+        featuredCheckbox.checked =
+        featuredTask.completed == 1;
+
+        featuredCheckbox.addEventListener(
+            "change",
+            () => toggleTask(featuredTask.id)
+        );
+
+        featuredDelete.addEventListener(
+            "click",
+            () => deleteTask(featuredTask.id)
+        );
+
+    }
+
+    // ===== TAREAS PENDIENTES =====
+
     tasks
-        .filter(task => task.completed == 0)
+
+        .filter(task => {
+
+            // solo pendientes
+
+            if(task.completed != 0){
+
+                return false;
+            }
+
+            // ocultar destacada
+
+            if(
+                featuredTask
+                &&
+                task.id === featuredTask.id
+            ){
+
+                return false;
+            }
+
+            return true;
+
+        })
+
         .forEach(task => {
 
             const li = document.createElement("li");
+
             li.className =
-`task-item priority-${task.priority}`;
+            `task-item priority-${task.priority}`;
 
             li.innerHTML = `
+
                 <label class="task-checkbox">
+
                     <input type="checkbox">
+
                     <span class="checkmark"></span>
+
                 </label>
 
-                <input class="task-text" type="text" value="${task.task}">
+                <input
+                    class="task-text"
+                    type="text"
+                    value="${task.task}"
+                >
 
-                <button class="delete-btn">✕</button>
+                <button class="delete-btn">
+
+                    ✕
+
+                </button>
+
             `;
 
-            const checkbox = li.querySelector("input[type=checkbox]");
-            const text = li.querySelector("input[type=text]");
-            const del = li.querySelector(".delete-btn");
+            const checkbox =
+            li.querySelector(
+                "input[type=checkbox]"
+            );
 
-            checkbox.checked = task.completed == 1;
+            const text =
+            li.querySelector(
+                "input[type=text]"
+            );
 
-            checkbox.addEventListener("change", () => toggleTask(task.id));
-            text.addEventListener("blur", () => editTask(task.id, text.value));
-            del.addEventListener("click", () => deleteTask(task.id, li));
+            const del =
+            li.querySelector(".delete-btn");
+
+            checkbox.checked =
+            task.completed == 1;
+
+            checkbox.addEventListener(
+                "change",
+                () => toggleTask(task.id)
+            );
+
+            text.addEventListener(
+                "blur",
+                () => editTask(task.id, text.value)
+            );
+
+            del.addEventListener(
+                "click",
+                () => deleteTask(task.id, li)
+            );
 
             taskList.appendChild(li);
+
         });
 
-    // historial
+    // ===== HISTORIAL =====
+
     completedList.innerHTML = "";
 
-    tasks
-        .filter(task => task.completed == 1)
-        .forEach(task => {
-            const li = document.createElement("li");
-            li.textContent = "✔ " + task.task;
-            completedList.appendChild(li);
-        });
+    const completedTasks = tasks.filter(
+        task => task.completed == 1
+    );
+
+    // contador
+
+    document.getElementById("history-count")
+    .textContent =
+    `${completedTasks.length} tareas`;
+
+    completedTasks.forEach(task => {
+
+        const li = document.createElement("li");
+
+        li.className = "completed-task";
+
+        li.innerHTML = `
+
+            <div class="completed-task-icon">
+                ✓
+            </div>
+
+            <div class="completed-task-content">
+
+                <span class="completed-task-text">
+
+                    ${task.task}
+
+                </span>
+
+                <span class="completed-task-date">
+
+                    ${new Date()
+                        .toLocaleDateString()}
+
+                </span>
+
+            </div>
+
+        `;
+
+        completedList.appendChild(li);
+
+    });
 
     updateProgress();
 }
 
+
+
+// historial
+
+completedList.innerHTML = "";
+
+const completedTasks = tasks.filter(
+    task => task.completed == 1
+);
+
+// contador historial
+
+document.getElementById("history-count")
+.textContent =
+`${completedTasks.length} tareas`;
+
+completedTasks.forEach(task => {
+
+    const li = document.createElement("li");
+
+    li.className = "completed-task";
+
+    li.innerHTML = `
+
+        <div class="completed-task-icon">
+            ✓
+        </div>
+
+        <div class="completed-task-content">
+
+            <span class="completed-task-text">
+
+                ${task.task}
+
+            </span>
+
+            <span class="completed-task-date">
+
+                ${new Date().toLocaleDateString()}
+
+            </span>
+
+        </div>
+
+    `;
+
+    completedList.appendChild(li);
+
+});
+
+updateProgress();
 // agregar
 async function addTask() {
     const text = newTaskInput.value.trim();
     const priority =
-document.getElementById("prioritySelect").value;
+document.getElementById("priority-select").value;
     if (!text) return;
 
     const res = await fetch("/api/tasks", {
@@ -433,7 +690,7 @@ async function loadStats() {
 
         // ui
         document.getElementById("level").textContent = currentLevel;
-        document.getElementById("xp").textContent = xp;
+        document.getElementById("xp").textContent =xp + " XP";
         document.getElementById("streak").textContent = data.streak;
 
         document.getElementById("xp-fill").style.width = progress + "%";
@@ -544,3 +801,4 @@ setupHelpButton();
 document.addEventListener("DOMContentLoaded", () => {
     loadUser();
 });
+
