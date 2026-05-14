@@ -143,19 +143,20 @@
             </div>
         </section>
 
-        <!-- sugerencias -->
-        <section class="input-section">
+       <section class="input-section">
 
-    <!-- input principal -->
+    <!-- fila superior -->
 
-    <div class="task-input-wrapper">
+    <div class="top-input-row">
+
+       <div class="task-input-wrapper">
 
     <input 
-        type="text" 
-        id="new-task-input" 
-        placeholder="Escribe una tarea simple..."
-        autocomplete="off"
-    >
+    type="text" 
+    id="new-task-input"
+    placeholder="Escribe una tarea simple..."
+    autocomplete="off"
+>
 
     <div
         id="suggestions-box"
@@ -164,35 +165,43 @@
 
 </div>
 
-    <!-- prioridad -->
+    </div>
 
-    <select id="priority-select">
+    <!-- fila inferior -->
 
-        <option value="alta">
-            🔴 Alta prioridad
-        </option>
+    <div class="bottom-input-row">
 
-        <option value="media" selected>
-            🟡 Prioridad media
-        </option>
+        <select id="priority-select">
 
-        <option value="baja">
-            🟢 Prioridad baja
-        </option>
+            <option value="alta">
+                🔴 Alta prioridad
+            </option>
 
-    </select>
-   
+            <option value="media" selected>
+                🟡 Prioridad media
+            </option>
 
-    <button
-    id="add-task-btn"
-    aria-label="Añadir tarea"
->
+            <option value="baja">
+                🟢 Prioridad baja
+            </option>
 
-    +
+        </select>
 
-</button>
+        <input
+            type="datetime-local"
+            id="task-date"
+        >
 
- 
+        <button
+            id="add-task-btn"
+            aria-label="Añadir tarea"
+        >
+
+            +
+
+        </button>
+
+    </div>
 
 </section>
 
@@ -209,6 +218,29 @@
     <!-- lista normal -->
 
     <ul id="task-list"></ul>
+
+    <div id="empty-state">
+
+    <div class="empty-icon">
+
+        🌱
+
+    </div>
+
+    <h3>
+
+        No hay tareas pendientes
+
+    </h3>
+
+    <p>
+
+        Empieza con una tarea pequeña
+        para mantener el enfoque.
+
+    </p>
+
+</div>
 
 </section>
         

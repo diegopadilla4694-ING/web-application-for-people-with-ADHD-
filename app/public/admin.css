@@ -104,48 +104,36 @@ header h1 {
 
     display:flex;
 
-    align-items:center;
+    flex-direction:column;
 
-    gap:18px;
-
-    width:100%;
-}
-
-/* contenedor input */
-
-.task-input-wrapper{
-
-    position:relative;
-
-    flex:1;
+    gap:16px;
 }
 
 /* input principal */
-
 #new-task-input{
 
     width:100%;
 
-    height:74px;
+    height:90px;
 
     border:none;
 
-    border-radius:24px;
+    border-radius:30px;
 
-    padding:0 26px;
+    padding:0 28px;
 
-    background:#ffffff;
+    font-size:32px;
 
-    box-shadow:
-    0 6px 18px rgba(0,0,0,.05);
+    font-weight:700;
 
-    font-size:20px;
-
-    font-weight:600;
+    background:white;
 
     color:#1f2937;
 
-    transition:.2s;
+    outline:none;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.05);
 }
 
 /* focus */
@@ -164,48 +152,43 @@ header h1 {
 
     color:#9ca3af;
 
-    font-weight:500;
+    font-weight:600;
 }
 
 /* prioridad */
 
 #priority-select{
 
-    height:74px;
+    flex:1;
 
-    min-width:250px;
+    height:70px;
 
     border:none;
 
-    border-radius:24px;
+    border-radius:22px;
 
-    padding:0 22px;
+    padding:0 18px;
 
-    background:#ffffff;
-
-    box-shadow:
-    0 6px 18px rgba(0,0,0,.05);
+    background:white;
 
     font-size:18px;
 
-    color:#374151;
-
-    cursor:pointer;
+    box-shadow:
+    0 6px 18px rgba(0,0,0,.05);
 }
-
-/* boton agregar */
 
 #add-task-btn{
 
-    min-width:74px;
+    width:78px;
 
-    height:74px;
+    height:78px;
 
     border:none;
 
-    border-radius:24px;
+    border-radius:26px;
 
-    background:linear-gradient(
+    background:
+    linear-gradient(
         135deg,
         #6366f1,
         #7c3aed
@@ -213,22 +196,19 @@ header h1 {
 
     color:white;
 
-    font-size:38px;
-
-    font-weight:300;
+    font-size:42px;
 
     cursor:pointer;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    transition:.2s;
+    transition:.25s;
 
     box-shadow:
-    0 10px 24px rgba(99,102,241,.22);
+    0 12px 28px rgba(99,102,241,.35);
+}
+
+#add-task-btn:hover{
+
+    transform:scale(1.05);
 }
 
 /* hover */
@@ -325,45 +305,57 @@ header h1 {
     transform:translateY(-2px);
 }
 
-/* sugerencias autocompletado */
 .suggestions-box{
 
     position:absolute;
 
-    top:82px;
+    top:100%;
 
     left:0;
 
     width:100%;
 
+    margin-top:12px;
+
     background:white;
 
-    border-radius:18px;
+    border-radius:22px;
 
     box-shadow:
-    0 10px 24px rgba(0,0,0,.08);
+    0 14px 30px rgba(0,0,0,.08);
 
     overflow:hidden;
 
     z-index:999;
 
     display:none;
+
+    border:
+    1px solid #ececff;
+}
+.task-input-wrapper{
+
+    position:relative;
+
+    width:100%;
 }
 
 .suggestion-item{
 
-    padding:16px 18px;
+    padding:18px 22px;
 
     cursor:pointer;
 
     transition:.2s;
 
-    font-size:16px;
+    font-size:17px;
+
+    color:#1f2937;
 }
 
 .suggestion-item:hover{
 
-    background:#f3f4f6;
+    background:#f5f7ff;
 }
 
 /* lista */
@@ -374,19 +366,36 @@ header h1 {
     gap: 12px;
 }
 
-.task-item{
+.task-left{
 
-    background:white;
+    display:flex;
 
-    border-radius:18px;
+    align-items:center;
 
-    padding:18px;
+    gap:18px;
 
-    margin-bottom:14px;
+    flex:1;
+}
 
-    box-shadow:0 2px 10px rgba(0,0,0,.03);
+.task-info{
 
-    transition:.2s;
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+}
+.task-date{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    font-size:15px;
+
+    color:#6b7280;
 }
 
 .task-item:hover{
@@ -401,23 +410,36 @@ header h1 {
     opacity: 0.6;
 }
 
-.task-text {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: 15px;
-    outline: none;
-}
+.task-text{
 
+    border:none;
+
+    background:none;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#1f2937;
+
+    width:100%;
+
+    margin:0;
+}
 .task-item.completed .task-text {
     text-decoration: line-through;
     color: #9ca3af;
 }
 
-.task-checkbox {
-    position: relative;
-    width: 20px;
-    height: 20px;
+.task-checkbox{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin:0;
 }
 
 .task-checkbox input {
@@ -700,22 +722,7 @@ header h1 {
     text-align:center;
 }
 
-/* colores priodridad */
 
-.priority-alta{
-
-    border-left:6px solid #ef4444;
-}
-
-.priority-media{
-
-    border-left:6px solid #facc15;
-}
-
-.priority-baja{
-
-    border-left:6px solid #22c55e;
-}
 
 
 /* ===== MENU LATERAL ===== */
@@ -1042,7 +1049,22 @@ header h1 {
 
     margin-left:auto;
 }
+.delete-btn{
 
+    border:none;
+
+    background:none;
+
+    color:#ff4d6d;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    flex-shrink:0;
+}
 
 /* Experineci amejorada*/
 
@@ -1210,3 +1232,129 @@ header h1 {
     border:1px solid #e2e8f0;
 }
 
+
+#task-date{
+
+    flex:1.2;
+
+    height:70px;
+
+    border:none;
+
+    border-radius:22px;
+
+    padding:0 18px;
+
+    background:white;
+
+    font-size:16px;
+
+    box-shadow:
+    0 6px 18px rgba(0,0,0,.05);
+}
+/*fila*/
+.bottom-input-row{
+
+    display:flex;
+
+    gap:14px;
+
+    align-items:center;
+}
+
+#empty-state{
+
+    display:none;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:50px 30px;
+
+    background:white;
+
+    border-radius:28px;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.05);
+
+    margin-top:20px;
+}
+
+.empty-icon{
+
+    font-size:56px;
+
+    margin-bottom:18px;
+}
+
+#empty-state h3{
+
+    font-size:28px;
+
+    color:#1f2937;
+
+    margin-bottom:10px;
+}
+
+#empty-state p{
+
+    font-size:17px;
+
+    color:#6b7280;
+
+    max-width:320px;
+
+    line-height:1.5;
+}
+
+.task-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:22px;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.05);
+
+    position:relative;
+
+    min-height:110px;
+
+    border-left:10px solid transparent;
+}
+.priority-alta{
+
+    border-left-color:#ef4444;
+}
+
+.priority-media{
+
+    border-left-color:#facc15;
+}
+
+.priority-baja{
+
+    border-left-color:#22c55e;
+}
+#task-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+}

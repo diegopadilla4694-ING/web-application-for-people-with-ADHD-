@@ -20,9 +20,9 @@ export const getTasks = async (req, res) => {
 //crear tarea
 export const createTask = async (req, res) => {
     try {
-        const { text, priority } = req.body;
+        const { text, priority,dueDate} = req.body;
         const user = req.cookies.sessionUser;
-
+console.log(req.body);
         if (!text) {
             return res.status(400).json({ error: "Texto vacío" });
         }
@@ -48,9 +48,9 @@ export const createTask = async (req, res) => {
 
         // insertar
        await pool.query(
-    `INSERT INTO tasks (task, user_email, priority)
-     VALUES (?, ?, ?)`,
-    [text, user, priority]
+    `INSERT INTO tasks (task, user_email, priority,due_date)
+     VALUES (?, ?, ?,?)`,
+    [text, user, priority, dueDate || null]
 );
 
         console.log("✅ TAREA AGREGADA");

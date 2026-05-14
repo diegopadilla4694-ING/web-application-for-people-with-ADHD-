@@ -259,7 +259,30 @@ function renderTasks() {
         task.completed == 0
 
     );
+// tareas pendientes
 
+const pendingTasks = tasks.filter(task =>
+
+    task.completed == 0
+
+);
+
+// estado vacio
+
+const emptyState =
+document.getElementById(
+    "empty-state"
+);
+
+if(pendingTasks.length === 0){
+
+    emptyState.style.display = "flex";
+
+}else{
+
+    emptyState.style.display = "none";
+
+}
     // mostrar destacada
 
     if(featuredTask){
@@ -316,7 +339,7 @@ function renderTasks() {
             </div>
 
         `;
-
+    
         // eventos
 
         const featuredCheckbox =
@@ -346,9 +369,9 @@ function renderTasks() {
 
     // ===== TAREAS PENDIENTES =====
 
-    tasks
+    
 
-        .filter(task => {
+    pendingTasks.filter(task => {
 
             // solo pendientes
 
@@ -376,33 +399,50 @@ function renderTasks() {
 
             const li = document.createElement("li");
 
-            li.className =
-            `task-item priority-${task.priority}`;
+           li.innerHTML = `
 
-            li.innerHTML = `
+    <div class="task-left">
 
-                <label class="task-checkbox">
+        <label class="task-checkbox">
 
-                    <input type="checkbox">
+            <input type="checkbox">
 
-                    <span class="checkmark"></span>
+            <span class="checkmark"></span>
 
-                </label>
+        </label>
 
-                <input
-                    class="task-text"
-                    type="text"
-                    value="${task.task}"
-                >
+        <div class="task-info">
 
-                <button class="delete-btn">
+            <input
+                class="task-text"
+                type="text"
+                value="${task.task}"
+            >
 
-                    ✕
+            <div class="task-date">
 
-                </button>
+                📅 ${
+                    task.due_date
+                    ?
+                    new Date(task.due_date)
+                    .toLocaleString()
+                    :
+                    "Sin fecha"
+                }
 
-            `;
+            </div>
 
+        </div>
+
+    </div>
+
+    <button class="delete-btn">
+
+        ✕
+
+    </button>
+
+`;
             const checkbox =
             li.querySelector(
                 "input[type=checkbox]"
@@ -442,9 +482,14 @@ function renderTasks() {
 
     completedList.innerHTML = "";
 
-    const completedTasks = tasks.filter(
-        task => task.completed == 1
-    );
+    const completedTasks = tasks
+
+    .filter(task => task.completed == 1)
+
+    .slice(-10)
+
+    .reverse();
+    
 
     // contador
 
@@ -456,7 +501,7 @@ function renderTasks() {
 
         const li = document.createElement("li");
 
-        li.className = "completed-task";
+         li.className =`task-item priority-${task.priority}`;
 
         li.innerHTML = `
 
@@ -493,42 +538,82 @@ function renderTasks() {
 
 
 // agregar
+
 async function addTask() {
-    const text = newTaskInput.value.trim();
+
+    const dueDate =
+    document.getElementById(
+        "task-date"
+    ).value;
+
+    const text =
+    newTaskInput.value.trim();
+
     const priority =
-document.getElementById("priority-select").value;
+    document.getElementById(
+        "priority-select"
+    ).value;
+
     if (!text) return;
 
     const res = await fetch("/api/tasks", {
+
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+
+        headers: {
+            "Content-Type":
+            "application/json"
+        },
+
         body: JSON.stringify({
-    text,
-    priority
-})
+
+            text,
+
+            priority,
+
+            dueDate
+
+        })
+
     });
 
     // por si existe error
+
     if (!res.ok) {
-        const err = await res.json(); 
-        showModal("⚠️ Atención", err.error);
+
+        const err = await res.json();
+
+        showModal(
+            "⚠️ Atención",
+            err.error
+        );
+
         return;
     }
 
-    // limpiar imput
+    // limpiar input
+
     newTaskInput.value = "";
+
+    document.getElementById(
+        "task-date"
+    ).value = "";
+
     suggestionsBox.innerHTML = "";
 
     // reset mensajes
+
     window.startMessage = false;
     window.midMessage = false;
     window.celebrated = false;
 
     // recargar
-    init();
-    loadStats();
-}
 
+    init();
+
+    loadStats();
+
+}
 // toglee
 async function toggleTask(id) {
     const task = tasks.find(t => t.id == id);
@@ -563,7 +648,11 @@ async function editTask(id, text) {
 
 // eliminar
 async function deleteTask(id, el) {
+   if(el){
+
     el.remove();
+
+}
 
     await fetch(`/api/tasks/${id}`, {
         method: "DELETE"
@@ -660,26 +749,67 @@ async function loadStats() {
 
 
 // autocompletado
+
 newTaskInput.addEventListener("input", () => {
-    const value = newTaskInput.value.toLowerCase();
+
+    const value =
+    newTaskInput.value.toLowerCase();
+
     suggestionsBox.innerHTML = "";
 
+    if(!value){
+
+        suggestionsBox.style.display =
+        "none";
+
+        return;
+    }
+
+    let found = false;
+
     for (let key in suggestions) {
+
         if (value.includes(key)) {
+
+            found = true;
+
             suggestions[key].forEach(s => {
-                const div = document.createElement("div");
-                div.className = "suggestion-item";
+
+                const div =
+                document.createElement("div");
+
+                div.className =
+                "suggestion-item";
+
                 div.textContent = s;
 
                 div.onclick = () => {
+
                     newTaskInput.value = s;
+
                     suggestionsBox.innerHTML = "";
+
+                    suggestionsBox.style.display =
+                    "none";
                 };
 
                 suggestionsBox.appendChild(div);
+
             });
         }
     }
+
+    if(found){
+
+        suggestionsBox.style.display =
+        "block";
+
+    }else{
+
+        suggestionsBox.style.display =
+        "none";
+    }
+
 });
 
 // boton sugerencia
@@ -748,6 +878,85 @@ closeModal.onclick = () => {
 init();
 loadStats();
 setupHelpButton(); 
+
+// pedir permisos de notificacion
+
+async function requestNotificationPermission(){
+
+    if("Notification" in window){
+
+        const permission =
+        await Notification.requestPermission();
+
+        console.log(
+            "Permiso:",
+            permission
+        );
+    }
+}
+
+requestNotificationPermission();
+
+function showTaskNotification(task){
+
+    if(Notification.permission === "granted"){
+
+        new Notification(
+
+            "⏰ Tarea pendiente",
+
+            {
+
+                body:
+                task.task,
+
+                icon:
+                "/favicon.ico"
+
+            }
+
+        );
+    }
+}
+
+function checkDueTasks(){
+
+    const now = new Date();
+
+    tasks.forEach(task => {
+
+        if(
+            task.due_date
+            &&
+            task.completed == 0
+        ){
+
+            const due =
+            new Date(task.due_date);
+
+            const diff =
+            due - now;
+
+            // 5 minutos antes
+
+            if(
+                diff > 0
+                &&
+                diff < 300000
+            ){
+
+                showTaskNotification(task);
+            }
+        }
+    });
+}
+
+setInterval(() => {
+
+    checkDueTasks();
+
+}, 60000);
+
 
 document.addEventListener("DOMContentLoaded", () => {
     loadUser();
